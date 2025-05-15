@@ -60,43 +60,13 @@ public class PatientServiceImpl implements PatientService {
                 .build();
         PatientEntity savedPatient = patientDbUtilService.savePatientDetails(patient);
         return new BaseApiResponse(true, 200, "Patient saved successfully", null);
-
-
     }
 
    @Autowired
-   //private PatientRepository patientRepository;
-
    private final PatientRepository patientRepository;
-//    @Override
-//
-//    public BaseApiResponse getPatientList() throws Exception {
-//        List<PatientEntity> patients = patientRepository.findAll();
-//        var patientDetails = patients.stream()
-//                .map(patient -> {
-//                    PatientResponseDTO dto = new PatientResponseDTO();
-//                    dto.setFirstName(patient.getFirstName());
-//                    dto.setMiddleName(patient.getMiddleName());
-//                    dto.setLastName(patient.getLastName());
-//                    dto.setEmail(patient.getEmail());
-//                    dto.setDateofBirth(patient.getDateofBirth());
-//                    dto.setEmergencyContact(patient.getEmergencyContact());
-//                    dto.setHomeAddress(patient.getHomeAddress());
-//                    dto.setPhoneNumber(patient.getPhoneNumber());
-//                    return dto;
-//
-//                }).collect(Collectors.toList());
-//        return BaseApiResponse.builder()
-//                .data(patientDetails) // Set data as the list of employee DTOs
-//                .status(200) // Success status
-//                .message("Patient fetched successfully")
-//                .build();
-//
-//    }
-//@Override
-public BaseApiResponse getPatientList() throws Exception {
-    List<PatientEntity> patients = patientRepository.findAll();
-    var patientDetails = patients.stream()
+    public BaseApiResponse getPatientList() throws Exception {
+        List<PatientEntity> patients = patientRepository.findAll();
+        var patientDetails = patients.stream()
             .map(patient -> {
                 PatientResponseDTO dto = new PatientResponseDTO();
                 dto.setFirstName(patient.getFirstName());

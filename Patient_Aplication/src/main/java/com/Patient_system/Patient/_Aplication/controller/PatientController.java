@@ -36,7 +36,7 @@ public class PatientController {
             // Handle exception and return a failed response
             BaseApiResponse errorResponse = BaseApiResponse.builder()
                     .status(500)
-                    .message("An error occurred while fetching employee data.")
+                    .message("An error occurred while fetching patient data.")
                     .errors(List.of(new FieldErrorDTO("unknown", e.getMessage())))
                     .build();
             return ResponseEntity.status(500).body(errorResponse);

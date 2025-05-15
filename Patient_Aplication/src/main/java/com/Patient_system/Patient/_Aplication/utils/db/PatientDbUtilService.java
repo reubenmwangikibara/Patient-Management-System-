@@ -14,6 +14,7 @@ import java.util.Optional;
 public class PatientDbUtilService {
     @Autowired
     private PatientRepository patientRepository;
+    //saving the patientdetails
     public PatientEntity savePatientDetails(PatientEntity patient) {
 
         return patientRepository.save(patient);
@@ -22,6 +23,11 @@ public class PatientDbUtilService {
         log.info("Checking if nationalID exists: {}", nationalID);
 
         return patientRepository.findByNationalID(nationalID);
+    }
+    // checking of patient exists for diagnosis
+    public Optional<PatientEntity> checkPatient(String patientID) {
+        log.info("Checking if patient exists by patient-ID: {}", patientID);
+        return patientRepository.findByPatientID(patientID);
 
     }
 }
