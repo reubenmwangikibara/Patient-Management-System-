@@ -27,19 +27,6 @@ public interface DiagnosisRepository extends JpaRepository <DiagnosisEntity, Lon
 
  //combining patient and diagnosis
 
-//    @Query(value = "SELECT d.patient_id AS patientID, " +
-//            "p.first_name AS firstName, " +
-//            "p.middle_name AS middleName, " +
-//            "p.last_name AS lastName, " +
-//            "d.symptoms, d.severity, d.date_of_diagnosis AS dateOfDiagnosis, " +
-//            "d.doctor_id AS doctorID " +
-//            "FROM diagnosis d " +
-//            "INNER JOIN patientinformation p ON d.patient_id = p.patient_id " +
-//            "WHERE d.patient_id = :patientID " +
-//            "ORDER BY d.patient_id, p.first_name, p.middle_name, p.last_name, d.symptoms, d.severity, d.date_of_diagnosis",
-//            nativeQuery = true)
-//    List<Map<String, Object>> fetchDiagnosisWithPatientFullNameByPatientID(@Param("patientID") String patientID);
-//
 @Query(value = "SELECT d.patient_id AS patientID, " +
         "p.first_name AS firstName, " +
         "p.middle_name AS middleName, " +
