@@ -22,12 +22,6 @@ public class DiagnosisDbUtilService {
         return diagnosisRepository.save(diagnosis);
     }
 
-
-    //@Override
-    public List<DiagnosisEntity> getDiagnosisByPatientID(String patientID) {
-        return diagnosisRepository.findByPatientID(patientID);
-    }
-
     public Optional<DiagnosisEntity> checkDiagnosedPatient(String patientID) {
         log.info("Checking if patient exists by patient-ID: {}", patientID);
         // Since the repository method returns a List, you handle it like this:
@@ -39,6 +33,7 @@ public class DiagnosisDbUtilService {
     public Optional<DiagnosisEntity> checkDiagnosisByPatientID(String patientID) {
         return diagnosisRepository.findByPatientID(patientID).stream().findFirst();
     }
+
 
 
 

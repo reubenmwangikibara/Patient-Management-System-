@@ -19,9 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -29,7 +27,6 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     @Autowired
     private final PatientDbUtilService patientDbUtilService;
     private final DiagnosisDbUtilService diagnosisDbUtilService;
-    @Autowired
     private PatientRepository patientRepository;
     private PatientDTO patientDTO;
     private DiagnosisDTO diagnosisDTO;
@@ -39,7 +36,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
         log.info("patientEntity:{}", patientEntity.isPresent());
 
         if (patientEntity.isEmpty()){
-            throw new PatientNotFoundException("Patient not found");
+            throw new Exception("Patient not found");
 
         }
         var diagnosis = DiagnosisEntity.builder()

@@ -7,7 +7,7 @@ import com.Patient_system.Patient._Aplication.dto.request.PatientDTO;
 public interface DiagnosisService {
 
     public BaseApiResponse addDiagnosis (DiagnosisDTO diagnosisDTO) throws Exception;
-  public   BaseApiResponse getPatientDiagnosisList() throws Exception;
+    public   BaseApiResponse getPatientDiagnosisList() throws Exception;
     //selects a specific patient by id
 
     BaseApiResponse getDiagnosisByPatientID(String patientID)throws Exception;

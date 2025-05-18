@@ -1,7 +1,6 @@
 package com.Patient_system.Patient._Aplication.repository;
 
 import com.Patient_system.Patient._Aplication.entity.DiagnosisEntity;
-import com.Patient_system.Patient._Aplication.entity.PatientEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
