@@ -9,6 +9,8 @@ import com.Patient_system.Patient._Aplication.utils.db.UserDBUtilService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,9 +18,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 
 public class UserServiceImpl implements UserService {
-    private final UserDBUtilService userDBUtilService;
-    //private final BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    private final UserDBUtilService userDBUtilService;
    @Override
    public UserEntity addNewUser (UserDTO userDTO) throws UserExistException {
     var userEntity = userDBUtilService.checkIfUserExist(userDTO.getUserName(), userDTO.getPhoneNumber());
@@ -27,14 +30,17 @@ public class UserServiceImpl implements UserService {
         log.info("user already exist");
         throw new UserExistException("user already exists");
     }
-    var user = UserEntity.builder().
+       //String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
+
+       var user = UserEntity.builder().
             status(1)
             .userName(userDTO.getUserName())
             .firstName(userDTO.getFirstName())
             .phoneNumber(userDTO.getPhoneNumber())
             .lastName(userDTO.getLastName())
             .role(userDTO.getRole())
-            .password(userDTO.getPassword())
+            .password(passwordEncoder.encode(userDTO.getPassword()))
+            //.password(encryptedPassword);
             .build();
     log.info("We are about to create a new user {}",new Gson().toJson(user));
        // Save the new user to the database
