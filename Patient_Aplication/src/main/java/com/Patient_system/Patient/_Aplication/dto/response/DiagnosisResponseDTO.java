@@ -17,7 +17,7 @@ public class DiagnosisResponseDTO {
     private String symptoms;
     private LocalDate dateofDiagnosis;
     private String severity;
-    private long doctorID;
+    private String doctorID;
     private String patientID;
 
 }

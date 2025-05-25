@@ -19,13 +19,18 @@ public class DoctorDBUtilService {
 
     public Optional <DoctorEntity> checkDoctor(String doctorID){
        log.info("Checking if doctor exists by Doctor-ID: {}", doctorID);
-        return doctorRepository.findByDoctorID( doctorID);
-
+        return doctorRepository.findByDoctorID(doctorID);
 
     }
     // checking by email
     public Optional<DoctorEntity> checkDoctorByEmail(String email) {
         return doctorRepository.findByEmail(email); // assumes you have this method in your repository
+    }
+    public Optional<DoctorEntity> checkDoctorByLicenseNumber(String licenseNumber) {
+        return doctorRepository.findByLicenseNumber(licenseNumber);
+    }
+    public Optional<DoctorEntity> checkBy (String phoneNumber){
+        return doctorRepository.findByPhoneNumber(phoneNumber);
     }
 
     // saving doctors details
@@ -33,6 +38,13 @@ public class DoctorDBUtilService {
         return doctorRepository.save(doctors);
 
     }
+    //used when diagnosing patient
+    public Optional<DoctorEntity> checkDoctorbyDotorID(String doctorID) {
+        log.info("Checking if doctor exists by doctor-ID: {}",doctorID);
+        return doctorRepository.findByDoctorID(doctorID);
+
+    }
+
 
 
 

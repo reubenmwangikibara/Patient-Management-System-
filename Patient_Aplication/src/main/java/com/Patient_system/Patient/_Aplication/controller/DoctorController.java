@@ -26,5 +26,28 @@ public class DoctorController {
         BaseApiResponse response = doctorService.getDoctorList();
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+    @PutMapping("/Doctor-Update-details/{doctorID}")
+    public ResponseEntity<BaseApiResponse> updateDoctorDetails(
+            @PathVariable String doctorID,
+            @RequestBody DoctorDTO doctorDTO) throws Exception {
+       BaseApiResponse response = doctorService.editDoctorDetailsByDoctorID(doctorID,doctorDTO);
+       return ResponseEntity.ok(response);
 
+    }
+    //deactivating the doctor
+    @PutMapping("/deactive-doctor/{doctorID}")
+    public ResponseEntity<BaseApiResponse> deactivateDoctor (
+            @PathVariable String doctorID) throws Exception {
+        BaseApiResponse response = doctorService.deactivateDoctorByDoctorID(doctorID);
+        return  ResponseEntity.ok(response);
+    }
+    @GetMapping("/doctor-diagnosis/{doctorID}")
+    public BaseApiResponse getDiagnosisAndPatientName(@PathVariable String doctorID) throws Exception {
+        return doctorService.fetchDoctorPatientDiagnosis(doctorID);
+    }
+    //useing dto
+    @GetMapping ("doctor_list_ofdiagnosis/{doctorID}")
+    public BaseApiResponse getDoctorWithDiagnoses(@PathVariable String doctorID) throws Exception{
+        return doctorService.getDoctorWithDiagnoses(doctorID);
+    }
 }

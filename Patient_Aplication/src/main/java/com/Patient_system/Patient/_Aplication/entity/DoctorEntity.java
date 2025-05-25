@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="doctors")
@@ -23,7 +24,7 @@ public class DoctorEntity implements Serializable {
     @Column(name = "doctor_id")
     private String doctorID;
     @Column(name = "first_name")
-    private String firstName;
+    private String doctorFirstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "middle_name")
@@ -52,4 +53,11 @@ public class DoctorEntity implements Serializable {
     private String address;
     @Column(name = "status")
     private Integer status;
+//linking with patient db
+    // linking with doctor to fetch the doctor_id
+    @OneToMany(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id", insertable = false, updatable = false)
+    private List<DiagnosisEntity> diagnosis;
+
+
 }

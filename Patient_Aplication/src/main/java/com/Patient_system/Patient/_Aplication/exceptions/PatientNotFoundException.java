@@ -5,7 +5,4 @@ public class PatientNotFoundException extends RuntimeException {
 
         super(message);
     }
-    public PatientNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class DoctorResponseDTO {
-   // private long tid;
+    //private long tid;
     private String doctorId;
-    private String firstName;
+    private String doctorFirstName;
     private String lastName;
     private String middleName;
     private String email;
@@ -25,5 +25,5 @@ public class DoctorResponseDTO {
     private String workingHours;
     private LocalDate dateJoined;
     private String address;
-    private Integer status;
+    //private Integer status;
 }

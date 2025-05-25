@@ -15,7 +15,7 @@ public class DoctorDTO implements Serializable {
     private long tid;
     private String doctorID;
     @NotBlank(message = "first name cannot be empty")
-    private String firstName;
+    private String doctorFirstName;
     @NotBlank(message = "last name cannot be empty")
     private String lastName;
     @NotBlank(message = "middle name cannot be empty")

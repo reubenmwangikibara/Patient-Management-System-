@@ -54,13 +54,6 @@ public class GlobalExceptionHandler {
             )
     );
   }
-//  @ExceptionHandler(UserExistException.class)
-//  public BaseApiResponse handleJsonMappingException(UserExistException e){
-//    String error = e.getMessage();
-//    log.info(error);
-//    return new BaseApiResponse(null,400,error,null);
-//  }
-
   @ExceptionHandler(Exception.class)
   public ResponseEntity<BaseApiResponse> handleException(Exception e) {
     BaseApiResponse errorResponse = BaseApiResponse.builder()

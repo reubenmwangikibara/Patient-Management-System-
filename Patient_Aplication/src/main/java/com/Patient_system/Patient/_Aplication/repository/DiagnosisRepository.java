@@ -34,10 +34,12 @@ public interface DiagnosisRepository extends JpaRepository <DiagnosisEntity, Lon
         "d.severity AS severity, " +
         "d.doctor_id AS doctorID, " +
         "d.date_of_diagnosis AS dateOfDiagnosis " +  // Added date field
-        "FROM diagnosis d " +
+        "FROM diagnosis  d " +
         "INNER JOIN patientinformation p ON d.patient_id = p.patient_id " +
         "WHERE d.patient_id = :patientID " +
         "ORDER BY d.date_of_diagnosis DESC",  // Order by diagnosis date
         nativeQuery = true)
 List<Map<String, Object>> fetchDiagnosisWithPatientFullNameByPatientID(@Param("patientID") String patientID);
+    List<DiagnosisEntity> findByDoctorDoctorID(String doctorId);
+
 }

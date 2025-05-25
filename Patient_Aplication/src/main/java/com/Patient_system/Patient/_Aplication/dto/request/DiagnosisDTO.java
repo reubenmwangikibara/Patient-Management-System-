@@ -22,8 +22,9 @@ public class DiagnosisDTO implements Serializable {
     private LocalDate dateofDiagnosis;
     @NotBlank(message = "Severity level required")
     private String severity;
-    private long doctorID;
-    //@NotBlank(message = "Patient ID is required")
+    @NotBlank(message = "Doctor ID is required")
+    private String doctorID;
+    @NotBlank(message = "Patient ID is required")
     private String patientID;
 
 }

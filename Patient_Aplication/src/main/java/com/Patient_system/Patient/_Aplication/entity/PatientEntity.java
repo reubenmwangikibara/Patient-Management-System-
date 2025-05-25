@@ -50,7 +50,7 @@ public class PatientEntity implements Serializable {
     private String emergencyContact;
     @Column(name = "status")
     private Integer status;
-   // @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
-    //private List<DiagnosisEntity> diagnoses;
+   @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+   private List<DiagnosisEntity> diagnoses;
 
 }

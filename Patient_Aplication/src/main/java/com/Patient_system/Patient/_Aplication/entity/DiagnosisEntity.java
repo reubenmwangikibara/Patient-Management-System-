@@ -1,10 +1,7 @@
 package com.Patient_system.Patient._Aplication.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -28,12 +25,18 @@ public class DiagnosisEntity implements Serializable {
     @Column(name = "severity")
     private String severity;
     @Column(name = "doctor_id")
-    private long doctorID;
+    private String doctorID;
     @Column(name = "patient_id")
     private String patientID;
     //linking with patient db
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id", referencedColumnName = "patient_id", insertable = false, updatable = false)
     private PatientEntity patient;
+
+    // linking with doctor to fetch the doctor_id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id", insertable = false, updatable = false)
+    private DoctorEntity doctor;
+
 
 }

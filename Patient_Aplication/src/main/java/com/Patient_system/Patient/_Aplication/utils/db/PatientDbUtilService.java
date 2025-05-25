@@ -1,5 +1,6 @@
 package com.Patient_system.Patient._Aplication.utils.db;
 
+import com.Patient_system.Patient._Aplication.entity.DoctorEntity;
 import com.Patient_system.Patient._Aplication.entity.PatientEntity;
 import com.Patient_system.Patient._Aplication.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,4 +31,5 @@ public class PatientDbUtilService {
         return patientRepository.findByPatientID(patientID);
 
     }
+
 }
