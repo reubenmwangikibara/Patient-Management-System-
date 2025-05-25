@@ -109,6 +109,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
         if (patient.isEmpty()) {
             throw new PatientNotFoundException("Patient not found with ID: " + patientID);
         }
+        /// ththt
 
         var diagnosis = diagnosisDbUtilService.checkDiagnosisByPatientID(patientID);
         if (diagnosis.isEmpty()) {
