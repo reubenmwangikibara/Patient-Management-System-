@@ -45,7 +45,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
         var doctorEntity = doctorDBUtilService.checkDoctor(String.valueOf(diagnosisDTO.getDoctorID()));
         log.info("doctorEntity:{}", doctorEntity.isEmpty());
         if (doctorEntity.isEmpty()){
-            throw new Exception("doctor is not available, invalid doctorID:" +diagnosisDTO.getDoctorID());
+            throw new Exception("doctor is not available, invalid doctor ID:" +diagnosisDTO.getDoctorID());
         }
         var diagnosis = DiagnosisEntity.builder()
                 .symptoms(diagnosisDTO.getSymptoms())

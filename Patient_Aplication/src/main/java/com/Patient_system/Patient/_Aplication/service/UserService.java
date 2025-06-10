@@ -10,5 +10,4 @@ public interface UserService {
 
     UserEntity addNewUser (UserDTO userDTO) throws UserExistException;
 
-
 }

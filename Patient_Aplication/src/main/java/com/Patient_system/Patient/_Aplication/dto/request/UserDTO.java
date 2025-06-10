@@ -15,7 +15,7 @@ public class UserDTO implements Serializable {
     private String firstName;
     @NotBlank(message = "Last Name cannot be blank")
     private String lastName;
-    @NotBlank(message = "username Name cannot be blank")
+    @NotBlank(message = "user Name cannot be blank")
     private String userName;
     private String password;
     @NotBlank(message = "Enter Phone number")
@@ -23,4 +23,5 @@ public class UserDTO implements Serializable {
     @NotBlank(message = "Enter your role")
     private String role;
     private int status ;
+    private String email;
 }
