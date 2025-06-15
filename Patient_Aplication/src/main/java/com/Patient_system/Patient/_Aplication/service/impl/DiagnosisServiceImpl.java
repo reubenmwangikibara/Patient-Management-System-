@@ -39,7 +39,6 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
         if (patientEntity.isEmpty()){
             throw new Exception("Patient not found");
-
         }
         //checkin is doctor exists
         var doctorEntity = doctorDBUtilService.checkDoctor(String.valueOf(diagnosisDTO.getDoctorID()));
