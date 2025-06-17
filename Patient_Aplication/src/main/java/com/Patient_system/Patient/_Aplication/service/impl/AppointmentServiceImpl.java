@@ -4,9 +4,12 @@ import com.Patient_system.Patient._Aplication.dto.BaseApiResponse;
 import com.Patient_system.Patient._Aplication.dto.request.AppointmentDTO;
 import com.Patient_system.Patient._Aplication.dto.request.DoctorDTO;
 import com.Patient_system.Patient._Aplication.dto.request.PatientDTO;
+import com.Patient_system.Patient._Aplication.dto.response.AppointmentResponseDTO;
 import com.Patient_system.Patient._Aplication.entity.AppointmentEntity;
 import com.Patient_system.Patient._Aplication.entity.DiagnosisEntity;
 import com.Patient_system.Patient._Aplication.exceptions.DoctorExistException;
+import com.Patient_system.Patient._Aplication.exceptions.PatientNotFoundException;
+import com.Patient_system.Patient._Aplication.repository.AppointmentRepository;
 import com.Patient_system.Patient._Aplication.service.AppointmentService;
 import com.Patient_system.Patient._Aplication.utils.db.AppointmentDbUtilService;
 import com.Patient_system.Patient._Aplication.utils.db.DoctorDBUtilService;
@@ -18,16 +21,18 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
-    @Autowired
     private final PatientDbUtilService patientDbUtilService;
     private final DoctorDBUtilService doctorDBUtilService;
     private final AppointmentDbUtilService appointmentDbUtilService;
+    private final AppointmentRepository appointmentRepository;
     @Override
     public BaseApiResponse bookAppointment(AppointmentDTO appointmentDTO) throws Exception {
 
@@ -60,6 +65,16 @@ public class AppointmentServiceImpl implements AppointmentService {
                     .errors("No doctor with ID: " + appointmentDTO.getDoctorID())
                     .build();
         }
+        String patientID =appointmentDTO.getPatientID();
+        Integer status = appointmentDTO.getStatus() != null ? appointmentDTO.getStatus() : 1;  // Default to 1 if null
+
+        //Integer status = appointmentDTO.getStatus(1);
+        long appointmentCount = appointmentRepository.countByPatientIDAndStatus(patientID, status);
+        if (appointmentCount >= 3 && status==1) {
+           // log.info("Error in booking appointment!!");
+            throw new IllegalStateException("Patient with ID " + patientID + " already has exceeded Appointment limit (3)");
+        }
+
         String prefix = "APP-";
         String numberPart = String.format("%05d", new Random().nextInt(10_000_000));
         String appointID = prefix + numberPart;
@@ -80,5 +95,33 @@ public class AppointmentServiceImpl implements AppointmentService {
                 200,
                 "Appointment Created successfully",
                 null);
+    }
+    public BaseApiResponse fetchAppointmentByPatientID(String patientID) throws Exception  {
+        // Check if patient exists
+        var appointmentEntity = appointmentDbUtilService.checkPatient(patientID);
+        log.info("patientEntity:{}", appointmentEntity.isEmpty());
+
+        if (appointmentEntity.isEmpty()){
+            throw new PatientNotFoundException("Patient does not have an appointment");
+
+        }
+        List< AppointmentEntity> appointments = appointmentRepository.findAllByPatientID(patientID);
+        var appointmentsList = appointments.stream().map(
+                appointment->{
+                    AppointmentResponseDTO appointmentDTO = new AppointmentResponseDTO();
+                    appointmentDTO.setAppointmentID(appointment.getAppointmentID());
+                    appointmentDTO.setDoctorID(appointment.getDoctorID());
+                    appointmentDTO.setPatientID(appointment.getPatientID());
+                    appointmentDTO.setAppointmentReason(appointment.getAppointmentReason());
+                    appointmentDTO.setAppointmentDate(appointment.getAppointmentDate());
+                    return appointmentDTO;
+
+        }).collect(Collectors.toList());
+        return BaseApiResponse.builder()
+                .data(appointmentsList)
+                .status(200)
+                .message("Patient Appointment fetched successfully")
+                .build();
+
     }
 }

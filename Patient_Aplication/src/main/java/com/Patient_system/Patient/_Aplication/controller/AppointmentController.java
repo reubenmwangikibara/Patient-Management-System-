@@ -6,10 +6,7 @@ import com.Patient_system.Patient._Aplication.service.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path= "api/v1/Appointment")
@@ -21,6 +18,11 @@ public class AppointmentController {
     @PostMapping("/add")
     public BaseApiResponse bookAppointment(@Valid @RequestBody AppointmentDTO appointmentDTO) throws Exception{
         return appointmentService.bookAppointment(appointmentDTO);
+
+    }
+    @GetMapping("{patientID}")
+    public BaseApiResponse getAppointment (@PathVariable String patientID) throws Exception{
+        return appointmentService.fetchAppointmentByPatientID(patientID);
 
     }
 }
