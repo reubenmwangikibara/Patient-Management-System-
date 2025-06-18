@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -83,10 +84,10 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .patientID(appointmentDTO.getPatientID())
                 .doctorID(appointmentDTO.getDoctorID())
                 .appointmentReason(appointmentDTO.getAppointmentReason())
-                .appointmentDate(LocalDateTime.now())
+                .appointmentDate(LocalDate.now())
                 .appointmentTime(LocalTime.now())
                 .updatedAt(LocalDateTime.now())
-                .createdAt(LocalDateTime.now())
+                .createdAt(LocalDate.now())
                 .status(1)
                 .build();
         AppointmentEntity addAppointment = appointmentDbUtilService.saveAppointment(appointment);
@@ -96,22 +97,23 @@ public class AppointmentServiceImpl implements AppointmentService {
                 "Appointment Created successfully",
                 null);
     }
-    public BaseApiResponse fetchAppointmentByPatientID(String patientID) throws Exception  {
+    public BaseApiResponse fetchAppointmentByPatientID(String patientID, String appointmentID) throws Exception  {
         // Check if patient exists
-        var appointmentEntity = appointmentDbUtilService.checkPatient(patientID);
+        var appointmentEntity = appointmentDbUtilService.checkPatient(patientID, appointmentID);
         log.info("patientEntity:{}", appointmentEntity.isEmpty());
 
         if (appointmentEntity.isEmpty()){
             throw new PatientNotFoundException("Patient does not have an appointment");
 
         }
-        List< AppointmentEntity> appointments = appointmentRepository.findAllByPatientID(patientID);
+        List< AppointmentEntity> appointments = appointmentRepository.findAllByPatientIDOrAppointmentID(patientID,appointmentID);
         var appointmentsList = appointments.stream().map(
                 appointment->{
                     AppointmentResponseDTO appointmentDTO = new AppointmentResponseDTO();
                     appointmentDTO.setAppointmentID(appointment.getAppointmentID());
                     appointmentDTO.setDoctorID(appointment.getDoctorID());
                     appointmentDTO.setPatientID(appointment.getPatientID());
+                    appointmentDTO.setAppointmentTime(appointment.getAppointmentTime());
                     appointmentDTO.setAppointmentReason(appointment.getAppointmentReason());
                     appointmentDTO.setAppointmentDate(appointment.getAppointmentDate());
                     return appointmentDTO;
@@ -124,4 +126,26 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .build();
 
     }
+
+public BaseApiResponse fetchAllAppointments () throws Exception {
+    List< AppointmentEntity> appointments = appointmentRepository.findAllByOrderByAppointmentDateAsc();
+    var appointmentsList = appointments.stream().map(
+            appointment->{
+                AppointmentResponseDTO appointmentDTO = new AppointmentResponseDTO();
+                appointmentDTO.setAppointmentID(appointment.getAppointmentID());
+                appointmentDTO.setDoctorID(appointment.getDoctorID());
+                appointmentDTO.setPatientID(appointment.getPatientID());
+                appointmentDTO.setAppointmentReason(appointment.getAppointmentReason());
+                appointmentDTO.setAppointmentDate(appointment.getAppointmentDate());
+                appointmentDTO.setAppointmentTime(appointment.getAppointmentTime());
+                return appointmentDTO;
+
+            }).collect(Collectors.toList());
+    return BaseApiResponse.builder()
+            .data(appointmentsList)
+            .status(200)
+            .message("Patient Appointment fetched successfully")
+            .build();
+
+}
 }

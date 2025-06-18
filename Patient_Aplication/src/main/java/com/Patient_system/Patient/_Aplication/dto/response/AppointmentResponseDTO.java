@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -16,8 +17,8 @@ public class AppointmentResponseDTO {
     private String patientID;
     private String doctorID;
     private String appointmentReason;
-    private LocalDateTime appointmentDate;
+    private LocalDate appointmentDate;
     private LocalTime appointmentTime;
-    private Integer status;
+   // private Integer status;
 
 }

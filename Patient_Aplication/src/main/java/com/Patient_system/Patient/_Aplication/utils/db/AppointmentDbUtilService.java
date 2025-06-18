@@ -21,9 +21,10 @@ public class AppointmentDbUtilService {
         log.info("Saving appointment: {}", appointment);
         return appointmentRepository.save(appointment);
     }
-    public List<AppointmentEntity> checkPatient(String patientID) {
+    public List<AppointmentEntity> checkPatient(String patientID, String appointmentID) {
         log.info("Checking if patient exists by patient-ID: {}", patientID);
-        return appointmentRepository.findAllByPatientID(patientID);
+        return appointmentRepository.findAllByPatientIDOrAppointmentID(patientID,appointmentID);
+
 
     }
     public Optional<AppointmentEntity> checkStatus(Integer status){

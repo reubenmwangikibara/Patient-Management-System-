@@ -6,6 +6,8 @@ import com.Patient_system.Patient._Aplication.entity.AppointmentEntity;
 import com.Patient_system.Patient._Aplication.entity.DiagnosisEntity;
 
 public interface AppointmentService {
-    public BaseApiResponse bookAppointment(AppointmentDTO appointmentDTO) throws Exception;
-    BaseApiResponse fetchAppointmentByPatientID(String patientID)throws Exception;
+    BaseApiResponse bookAppointment(AppointmentDTO appointmentDTO) throws Exception;
+    BaseApiResponse fetchAppointmentByPatientID(String patientID, String appointmentID)throws Exception;
+    BaseApiResponse fetchAllAppointments() throws Exception;
+
 }

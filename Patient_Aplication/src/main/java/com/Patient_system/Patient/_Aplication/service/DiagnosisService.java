@@ -9,7 +9,6 @@ public interface DiagnosisService {
     public BaseApiResponse addDiagnosis (DiagnosisDTO diagnosisDTO) throws Exception;
      BaseApiResponse getPatientDiagnosisList() throws Exception;
     //selects a specific patient by id
-
     BaseApiResponse getDiagnosisByPatientID(String patientID)throws Exception;
     BaseApiResponse fetchDiagnosisAndPatientName(String patientID) throws Exception;
 

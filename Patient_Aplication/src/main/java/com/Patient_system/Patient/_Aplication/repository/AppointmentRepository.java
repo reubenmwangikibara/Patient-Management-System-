@@ -13,8 +13,10 @@ import java.util.Optional;
 @Repository
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity,Long> {
     Optional<AppointmentEntity> findByPatientID(String patientID);
-    List<AppointmentEntity> findAllByPatientID(String patientID);
+    List<AppointmentEntity> findAllByPatientIDOrAppointmentID(String patientID, String appointmentID);
     Long countByPatientIDAndStatus(String patientID, Integer status);
     Optional<AppointmentEntity>findByStatus(Integer status);
+    List<AppointmentEntity> findAllByOrderByAppointmentDateAsc();
+
 
 }

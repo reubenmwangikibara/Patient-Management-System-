@@ -26,7 +26,7 @@ public class DiagnosisController {
 
     }
     @GetMapping("/list-Diagnose")
-    public ResponseEntity<BaseApiResponse>getPatientDiagnosisList (){
+    public ResponseEntity<BaseApiResponse>PatientDiagnosisList (){
         try {
 
             BaseApiResponse response = diagnosisService.getPatientDiagnosisList();

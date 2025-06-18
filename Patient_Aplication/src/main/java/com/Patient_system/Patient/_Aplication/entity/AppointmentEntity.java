@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 @Entity
@@ -32,11 +33,11 @@ public class AppointmentEntity implements Serializable {
     @Column(name = "status")
     private Integer status;
     @Column(name = "appointment_date")
-    private LocalDateTime appointmentDate;
+    private LocalDate appointmentDate;
     @Column(name = "appointment_time")
     private LocalTime appointmentTime;
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
