@@ -9,5 +9,6 @@ public interface AppointmentService {
     BaseApiResponse bookAppointment(AppointmentDTO appointmentDTO) throws Exception;
     BaseApiResponse fetchAppointmentByPatientID(String patientID, String appointmentID)throws Exception;
     BaseApiResponse fetchAllAppointments() throws Exception;
+    BaseApiResponse editAppointmentDetails(String appointmentID,AppointmentDTO appointmentDTO) throws Exception;
 
 }

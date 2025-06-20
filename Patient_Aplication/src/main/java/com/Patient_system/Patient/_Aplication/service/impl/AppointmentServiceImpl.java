@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -148,4 +149,23 @@ public BaseApiResponse fetchAllAppointments () throws Exception {
             .build();
 
 }
+    public BaseApiResponse editAppointmentDetails( String appointmentID, AppointmentDTO appointmentDTO) throws Exception{
+       AppointmentEntity appointmentEntity = appointmentRepository.checkByAppointmentID(appointmentID);
+        if (appointmentEntity==null){
+            throw new Exception("Appointment " + appointmentID + " not found.");
+
+
+        }
+        if (appointmentEntity.getStatus() == 0) {
+            throw new Exception("patient with ID " + appointmentID + " is already deactivated.");
+
+        }
+        appointmentEntity.setAppointmentReason(appointmentDTO.getAppointmentReason());
+        appointmentEntity.setAppointmentDate(appointmentDTO.getAppointmentDate());
+        appointmentEntity.setAppointmentTime(appointmentDTO.getAppointmentTime());
+        appointmentDTO.setUpdatedAt(appointmentDTO.getUpdatedAt());
+        AppointmentEntity updatedAppointment = appointmentRepository.save(appointmentEntity);
+
+        return new BaseApiResponse(true, 200, "Appointment details updated successfully", updatedAppointment);
+    }
 }

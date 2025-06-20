@@ -25,10 +25,12 @@ public class AppointmentDbUtilService {
         log.info("Checking if patient exists by patient-ID: {}", patientID);
         return appointmentRepository.findAllByPatientIDOrAppointmentID(patientID,appointmentID);
 
-
     }
     public Optional<AppointmentEntity> checkStatus(Integer status){
         return appointmentRepository.findByStatus(status);
+    }
+    public  AppointmentEntity checkByAppointmentID(String appointmentID){
+        return appointmentRepository.checkByAppointmentID(appointmentID);
     }
 
 }

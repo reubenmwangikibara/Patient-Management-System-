@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface
 DoctorService {
-    public BaseApiResponse addDoctor(DoctorDTO doctorDTO) throws Exception;
-    public BaseApiResponse getDoctorList () throws Exception;
-    public BaseApiResponse editDoctorDetailsByDoctorID(String doctorID,DoctorDTO doctorDTO) throws Exception;
-    public BaseApiResponse deactivateDoctorByDoctorID(String doctorID) throws Exception;
+    BaseApiResponse addDoctor(DoctorDTO doctorDTO) throws Exception;
+    BaseApiResponse getDoctorList () throws Exception;
+    BaseApiResponse editDoctorDetailsByDoctorID(String doctorID,DoctorDTO doctorDTO) throws Exception;
+    BaseApiResponse deactivateDoctorByDoctorID(String doctorID) throws Exception;
     BaseApiResponse fetchDoctorPatientDiagnosis(String doctorID) throws Exception;
     BaseApiResponse getDoctorWithDiagnoses(String doctorId) throws Exception;
 

@@ -37,4 +37,13 @@ public class AppointmentController {
         return appointmentService.fetchAppointmentByPatientID(patientID, appointmentID);
 
     }
+    @PutMapping("/Appointment-Update-details/{appointmentID}")
+    public ResponseEntity <BaseApiResponse> updateAppointment(
+            @PathVariable String appointmentID,
+            @RequestBody AppointmentDTO appointmentDTO) throws Exception{
+        BaseApiResponse response = appointmentService.editAppointmentDetails(appointmentID,appointmentDTO);
+        return ResponseEntity.ok(response);
+
+
+    }
 }

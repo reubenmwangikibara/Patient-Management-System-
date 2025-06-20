@@ -172,12 +172,11 @@ public class DoctorServiceImpl implements DoctorService {
 
         return new BaseApiResponse(true, 200, "Doctor details updated successfully", deactivateDoctor);
 
-
     }
 
     @Override
     public BaseApiResponse fetchDoctorPatientDiagnosis(String doctorID) throws Exception {
-       //fetchDoctorPatientDiagnosis is from doctor service eing implemented here
+       //fetchDoctorPatientDiagnosis is from doctor service being implemented here
         var doctor = doctorDBUtilService.checkDoctorbyDotorID(doctorID);
 
         if (doctor.isEmpty()) {
@@ -232,7 +231,6 @@ public class DoctorServiceImpl implements DoctorService {
                             diagnosis.getSymptoms(),
                             diagnosis.getSeverity(),
                             diagnosis.getDateofDiagnosis()
-
 
                             );
                 }).collect(Collectors.toList());
