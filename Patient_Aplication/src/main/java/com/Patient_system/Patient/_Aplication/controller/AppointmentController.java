@@ -46,4 +46,12 @@ public class AppointmentController {
 
 
     }
+    @PutMapping("/Complete-appointment/{appointmentID}")
+    public ResponseEntity<BaseApiResponse>deactivateAppointment(
+            @PathVariable String appointmentID) throws Exception{
+        BaseApiResponse response = appointmentService.completeAppointment(appointmentID);
+        return ResponseEntity.ok(response);
+    }
+
+
 }
