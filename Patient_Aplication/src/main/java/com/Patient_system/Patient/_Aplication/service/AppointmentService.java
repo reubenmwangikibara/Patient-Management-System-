@@ -11,4 +11,5 @@ public interface AppointmentService {
     BaseApiResponse fetchAllAppointments() throws Exception;
     BaseApiResponse editAppointmentDetails(String appointmentID,AppointmentDTO appointmentDTO) throws Exception;
 
+    BaseApiResponse completeAppointment(String appointmentID) throws Exception;
 }

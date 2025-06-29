@@ -24,6 +24,7 @@ public class UserEntity implements UserDetails, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Use IDENTITY for auto-increment
     @Column(name = "tid", nullable = false)
     private long tid;
+    @Column(name = "first_name")
     private String firstName;
     @Column(name = "Last_name")
     private String lastName;

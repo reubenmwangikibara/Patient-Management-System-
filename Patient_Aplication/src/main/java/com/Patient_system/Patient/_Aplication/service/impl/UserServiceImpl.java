@@ -2,9 +2,11 @@ package com.Patient_system.Patient._Aplication.service.impl;
 
 import com.Patient_system.Patient._Aplication.dto.BaseApiResponse;
 import com.Patient_system.Patient._Aplication.dto.request.UserDTO;
+import com.Patient_system.Patient._Aplication.dto.request.passwordUpdateDTO;
 import com.Patient_system.Patient._Aplication.entity.Role;
 import com.Patient_system.Patient._Aplication.entity.UserEntity;
 import com.Patient_system.Patient._Aplication.exceptions.UserExistException;
+import com.Patient_system.Patient._Aplication.repository.UserRepository;
 import com.Patient_system.Patient._Aplication.service.UserService;
 import com.Patient_system.Patient._Aplication.utils.db.UserDBUtilService;
 import com.google.gson.Gson;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -21,8 +25,9 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-   private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     private final UserDBUtilService userDBUtilService;
+    private final UserRepository userRepository;
    @Override
    public UserEntity addNewUser (UserDTO userDTO) throws UserExistException {
     var userEntity = userDBUtilService.checkIfUserExist(userDTO.getUserName(), userDTO.getPhoneNumber());
@@ -49,7 +54,21 @@ public class UserServiceImpl implements UserService {
        UserEntity savedUser = userDBUtilService.saveUserDetails(user);
     log.info("User Created Successfully");
     return savedUser;
+   }
+   // updating the password
+    public BaseApiResponse updatePassword(String username, String phoneNumber, String email,passwordUpdateDTO updateDTO) throws Exception{
+       var optionalUser = userDBUtilService.selectUser(username, phoneNumber, email);
 
+        if (optionalUser.isEmpty()) {
+            throw new Exception("User not found with given username, phone number, or email.");
+        }
+        var userEntity = optionalUser.get();
 
-}
+        if (!passwordEncoder.matches(updateDTO.getCurrentPassword(),userEntity.getPassword())){
+            throw new Exception("Current password is incorrect.");
+        }
+        userEntity.setPassword(passwordEncoder.encode(updateDTO.getNewPassword()));
+        UserEntity updatedUser = userRepository.save(userEntity);
+        return new BaseApiResponse(true, 200, "Password updated successfully", updatedUser);
+    }
 }

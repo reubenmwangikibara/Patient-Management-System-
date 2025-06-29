@@ -43,8 +43,6 @@ public class AppointmentController {
             @RequestBody AppointmentDTO appointmentDTO) throws Exception{
         BaseApiResponse response = appointmentService.editAppointmentDetails(appointmentID,appointmentDTO);
         return ResponseEntity.ok(response);
-
-
     }
     @PutMapping("/Complete-appointment/{appointmentID}")
     public ResponseEntity<BaseApiResponse>deactivateAppointment(
@@ -52,6 +50,4 @@ public class AppointmentController {
         BaseApiResponse response = appointmentService.completeAppointment(appointmentID);
         return ResponseEntity.ok(response);
     }
-
-
 }

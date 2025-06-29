@@ -19,5 +19,8 @@ public class UserDBUtilService {
 
         return userRepository.save(user);
     }
+    public  Optional<UserEntity>selectUser(String username, String phoneNumber, String email){
+        return userRepository.findByUserNameOrPhoneNumberOrEmail( username, phoneNumber, email);
+    }
 
 }

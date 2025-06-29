@@ -168,4 +168,20 @@ public BaseApiResponse fetchAllAppointments () throws Exception {
 
         return new BaseApiResponse(true, 200, "Appointment details updated successfully", updatedAppointment);
     }
+    //complete appointment
+    public BaseApiResponse completeAppointment(String appointmentID) throws Exception{
+        AppointmentEntity appointmentEntity = appointmentRepository.checkByAppointmentID(appointmentID);
+        if (appointmentEntity==null){
+            throw new Exception("Appointment " + appointmentID + " not found.");
+        }
+        if (appointmentEntity.getStatus() == 0) {
+            throw new Exception("patient with appointment ID: " + appointmentID + " is already deactivated.");
+
+        }
+        appointmentEntity.setStatus(0);
+        AppointmentEntity deactivateAppointment = appointmentRepository.save(appointmentEntity);
+        return new BaseApiResponse(true, 200, "Appointment details updated successfully", deactivateAppointment);
+
+    }
+
 }
