@@ -50,6 +50,7 @@ public class UserEntity implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
+
         return email;
     }
     @Override // the password comes from the userdetails and then returns my password

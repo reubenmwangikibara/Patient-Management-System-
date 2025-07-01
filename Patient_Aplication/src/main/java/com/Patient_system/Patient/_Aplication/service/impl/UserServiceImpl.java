@@ -5,6 +5,7 @@ import com.Patient_system.Patient._Aplication.dto.request.UserDTO;
 import com.Patient_system.Patient._Aplication.dto.request.passwordUpdateDTO;
 import com.Patient_system.Patient._Aplication.entity.Role;
 import com.Patient_system.Patient._Aplication.entity.UserEntity;
+import com.Patient_system.Patient._Aplication.exceptions.PasswordUpdateException;
 import com.Patient_system.Patient._Aplication.exceptions.UserExistException;
 import com.Patient_system.Patient._Aplication.repository.UserRepository;
 import com.Patient_system.Patient._Aplication.service.UserService;
@@ -36,8 +37,12 @@ public class UserServiceImpl implements UserService {
        // log.info("user already exist");
         throw new UserExistException("username or Phone Number taken");
     }
-       //String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-
+    var checkEmail = userDBUtilService.checkUserEmail(userDTO.getEmail());
+       log.info("userEntity: {}", checkEmail.isPresent());
+       if (checkEmail.isPresent()) {
+           // log.info("user already exist");
+           throw new UserExistException("Email is taken");
+       }
        var user = UserEntity.builder().
             status(1)
             .userName(userDTO.getUserName())
@@ -46,7 +51,6 @@ public class UserServiceImpl implements UserService {
             .lastName(userDTO.getLastName())
              .email(userDTO.getEmail())
                .role(Role.USER)
-               //.password(passwordEncoder.encode(request.getPassword()))
              .password( passwordEncoder.encode(userDTO.getPassword()))
             .build();
     log.info("We are about to create a new user {}",new Gson().toJson(user));
@@ -60,7 +64,7 @@ public class UserServiceImpl implements UserService {
        var optionalUser = userDBUtilService.selectUser(username, phoneNumber, email);
 
         if (optionalUser.isEmpty()) {
-            throw new Exception("User not found with given username, phone number, or email.");
+            throw new PasswordUpdateException("User not found with given username, phone number, or email.");
         }
         var userEntity = optionalUser.get();
 
@@ -69,6 +73,6 @@ public class UserServiceImpl implements UserService {
         }
         userEntity.setPassword(passwordEncoder.encode(updateDTO.getNewPassword()));
         UserEntity updatedUser = userRepository.save(userEntity);
-        return new BaseApiResponse(true, 200, "Password updated successfully", updatedUser);
+        return new BaseApiResponse(null, 200, "Password updated successfully", null);
     }
 }

@@ -1,6 +1,7 @@
 package com.Patient_system.Patient._Aplication.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class UserDTO implements Serializable {
     private String lastName;
     @NotBlank(message = "user Name cannot be blank")
     private String userName;
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
     @NotBlank(message = "Enter Phone number")
     private String phoneNumber;

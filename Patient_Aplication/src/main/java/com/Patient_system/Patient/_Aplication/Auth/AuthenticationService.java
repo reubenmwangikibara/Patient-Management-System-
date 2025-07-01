@@ -35,6 +35,12 @@ public class AuthenticationService {
              log.info("user already exist");
             throw new UserExistException("username or Phone Number taken");
         }
+        var checkemail = userDBUtilService.checkUserEmail(request.getEmail());
+        log.info("userEntity: {}", userEntity.isPresent());
+        if (userEntity.isPresent()) {
+            log.info("user already exist");
+            throw new UserExistException("Email already exist");
+        }
         var user= UserEntity.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())

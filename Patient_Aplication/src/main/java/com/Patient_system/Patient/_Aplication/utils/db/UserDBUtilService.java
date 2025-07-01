@@ -22,5 +22,8 @@ public class UserDBUtilService {
     public  Optional<UserEntity>selectUser(String username, String phoneNumber, String email){
         return userRepository.findByUserNameOrPhoneNumberOrEmail( username, phoneNumber, email);
     }
+    public Optional<UserEntity> checkUserEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
 }

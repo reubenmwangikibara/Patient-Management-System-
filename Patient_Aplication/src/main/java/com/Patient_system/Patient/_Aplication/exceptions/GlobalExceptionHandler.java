@@ -19,6 +19,17 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 
 public class GlobalExceptionHandler {
+  @ExceptionHandler(PasswordUpdateException.class)
+  public ResponseEntity<BaseApiResponse> handlePasswordUpdateException(PasswordUpdateException ex) {
+    BaseApiResponse response = new BaseApiResponse(
+            null,
+            HttpStatus.BAD_REQUEST.value(),
+            ex.getMessage(),
+            null
+    );
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+  }
+
 
   @ExceptionHandler(PatientExistException.class)
   public ResponseEntity<BaseApiResponse> handlePatientExistException(PatientExistException ex) {
