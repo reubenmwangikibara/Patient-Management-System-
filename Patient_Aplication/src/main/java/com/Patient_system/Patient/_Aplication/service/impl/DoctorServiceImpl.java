@@ -158,19 +158,23 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     public BaseApiResponse deactivateDoctorByDoctorID(String doctorID) throws Exception {
-        DoctorEntity doctorEntity = doctorRepository.checkByDoctorID(doctorID);
+        DoctorEntity doctorEntity = doctorRepository.checkByDoctorID(doctorID); //findByDoctorID
         if (doctorEntity == null) {
             throw new Exception("Doctor with DoctorID " + doctorID + " does not exist!.");
-
         }
         if (doctorEntity.getStatus() == 0) {
             throw new Exception("Doctor with Doctor ID " + doctorID + " is already deactivated.");
 
         }
         doctorEntity.setStatus(0);
-        DoctorEntity deactivateDoctor = doctorRepository.save(doctorEntity);
+        DoctorEntity updatedDoctor= doctorRepository.save(doctorEntity);
+        return BaseApiResponse.builder()
+                .data(null)
+                .status(200)
+                .message("Doctor deactivated successfully.")
+                .build();
 
-        return new BaseApiResponse(true, 200, "Doctor details updated successfully", deactivateDoctor);
+       // return new BaseApiResponse(true, 200, "Doctor details updated successfully", deactivateDoctor);
 
     }
 

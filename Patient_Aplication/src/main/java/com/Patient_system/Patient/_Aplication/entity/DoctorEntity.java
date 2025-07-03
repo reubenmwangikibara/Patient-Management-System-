@@ -55,7 +55,7 @@ public class DoctorEntity implements Serializable {
     private Integer status;
 //linking with patient db
     // linking with doctor to fetch the doctor_id
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
     //@JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id", insertable = false, updatable = false)
     private List<DiagnosisEntity> diagnosis;
 

@@ -109,7 +109,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
                 .build();
 
     }
-    //selection of join patient and diagnosis// implemeents fetchDiagnosisAndPatientName from diagnosis serivce
+    //selection of join patient and diagnosis// implements fetchDiagnosisAndPatientName from diagnosis serivce
     @Override
     public BaseApiResponse fetchDiagnosisAndPatientName(String patientID) throws Exception {
         var patient = patientDbUtilService.checkPatient(patientID);

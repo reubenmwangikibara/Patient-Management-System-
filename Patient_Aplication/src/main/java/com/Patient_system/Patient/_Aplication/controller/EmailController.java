@@ -13,15 +13,4 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
-    @GetMapping("/send")
-    public String sendTestEmail(@RequestParam String to) {
-        emailService.sendAppointmentConfirmation(
-                to,
-                "John Doe",         // sample patient name
-                "Jane Smith",       // sample doctor name
-                "2025-06-15",       // sample date
-                "10:00 AM"          // sample time
-        );
-        return "Appointment email sent to " + to;
-    }
 }

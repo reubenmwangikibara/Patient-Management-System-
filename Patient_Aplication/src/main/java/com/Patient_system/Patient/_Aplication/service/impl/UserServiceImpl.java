@@ -8,6 +8,7 @@ import com.Patient_system.Patient._Aplication.entity.UserEntity;
 import com.Patient_system.Patient._Aplication.exceptions.PasswordUpdateException;
 import com.Patient_system.Patient._Aplication.exceptions.UserExistException;
 import com.Patient_system.Patient._Aplication.repository.UserRepository;
+import com.Patient_system.Patient._Aplication.service.EmailService;
 import com.Patient_system.Patient._Aplication.service.UserService;
 import com.Patient_system.Patient._Aplication.utils.db.UserDBUtilService;
 import com.google.gson.Gson;
@@ -24,12 +25,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 
 public class UserServiceImpl implements UserService {
-
     @Autowired
     private PasswordEncoder passwordEncoder;
     private final UserDBUtilService userDBUtilService;
     private final UserRepository userRepository;
-   @Override
+    private final EmailService emailService;
+
+    @Override
    public UserEntity addNewUser (UserDTO userDTO) throws UserExistException {
     var userEntity = userDBUtilService.checkIfUserExist(userDTO.getUserName(), userDTO.getPhoneNumber());
     log.info("userEntity: {}", userEntity.isPresent());
@@ -57,17 +59,20 @@ public class UserServiceImpl implements UserService {
        // Save the new user to the database
        UserEntity savedUser = userDBUtilService.saveUserDetails(user);
     log.info("User Created Successfully");
+        //sending notification after creating account
+        String savedEmail = savedUser.getEmail();
+        String savedName = savedUser.getFirstName();
+        String savedLName = savedUser.getFirstName();
+        emailService.sendWelcomeEmail(savedEmail, savedName,savedLName);
     return savedUser;
    }
    // updating the password
     public BaseApiResponse updatePassword(String username, String phoneNumber, String email,passwordUpdateDTO updateDTO) throws Exception{
        var optionalUser = userDBUtilService.selectUser(username, phoneNumber, email);
-
         if (optionalUser.isEmpty()) {
             throw new PasswordUpdateException("User not found with given username, phone number, or email.");
         }
         var userEntity = optionalUser.get();
-
         if (!passwordEncoder.matches(updateDTO.getCurrentPassword(),userEntity.getPassword())){
             throw new Exception("Current password is incorrect.");
         }

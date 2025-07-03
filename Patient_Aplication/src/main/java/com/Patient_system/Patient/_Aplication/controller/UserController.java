@@ -30,14 +30,6 @@ public class UserController {
  ) throws Exception{
      BaseApiResponse response = userService.updatePassword(username, phoneNumber, email, updateDTO);
      return ResponseEntity.ok(response);
-//     try {
-//         BaseApiResponse response = userService.updatePassword(username, phoneNumber, email, updateDTO);
-//         return ResponseEntity.ok(response);
-//     } catch (Exception e) {
-//         BaseApiResponse errorResponse = new BaseApiResponse(false, 400, e.getMessage(), null);
-//         return ResponseEntity.badRequest().body(errorResponse);
-//
-//     }
 
  }
     /*@PutMapping("/Appointment-Update-details/{appointmentID}")

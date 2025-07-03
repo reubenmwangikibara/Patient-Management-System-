@@ -38,5 +38,4 @@ public class DiagnosisEntity implements Serializable {
     @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id", insertable = false, updatable = false)
     private DoctorEntity doctor;
 
-
 }
